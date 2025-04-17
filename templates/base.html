@@ -1,0 +1,73 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>{% block title %}Gourmet Bistro{% endblock %}</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="{% static 'css/main.css' %}">
+  <script src="{% static 'js/cart.js' %}" defer></script>
+</head>
+<body class="{% if menu_page %}menu-page{% endif %}">
+  <header class="site-header">
+    {% if menu_page %}
+      <!-- гамбургер только в меню -->
+      <button id="hamburger" class="hamburger" aria-label="Открыть категории">
+        <span></span><span></span><span></span>
+      </button>
+    {% else %}
+      <!-- для выравнивания логотипа -->
+      <div style="width:24px;"></div>
+    {% endif %}
+
+    <!-- логотип по центру -->
+    <a href="{% url 'home' %}" class="site-logo">Gourmet Bistro</a>
+
+    <div class="header-right">
+      <nav class="main-nav">
+        <a href="{% url 'menu' %}">Меню</a>
+        <a href="{% url 'promo' %}">Акции</a>
+        <a href="{% url 'delivery' %}">Доставка</a>
+        <a href="{% url 'contacts' %}">Контакты</a>
+        <a href="{% url 'terms' %}">Соглашение</a>
+      </nav>
+      <button id="cart-btn" class="cart-btn" aria-label="Открыть корзину">
+        🛒 <span id="cart-count">0</span>
+      </button>
+    </div>
+  </header>
+
+  {% if menu_page %}
+    <aside id="side-menu" class="side-menu">
+      <ul>
+        {% for cat in categories %}
+          <li><a href="#cat-{{ cat.id }}">{{ cat.name }}</a></li>
+        {% endfor %}
+      </ul>
+    </aside>
+  {% endif %}
+
+  <main>
+    {% block content %}{% endblock %}
+  </main>
+
+  <!-- корзина‑модалка -->
+  <div id="cart-modal" class="hidden">
+    <div class="modal-content">
+      <h2>Ваша корзина</h2>
+      <ul id="cart-items"></ul>
+      <form id="order-form">
+        <input name="client-name"    type="text"  placeholder="Ваше имя"      required>
+        <input name="client-phone"   type="tel"   placeholder="Телефон"         required>
+        <input name="client-address" type="text"  placeholder="Адрес доставки" required>
+        <button type="submit" class="pay-btn">Оплатить</button>
+      </form>
+      <button class="close-btn" aria-label="Закрыть">&times;</button>
+    </div>
+  </div>
+
+  <footer class="site-footer">
+    &copy; 2025 Gourmet Bistro
+  </footer>
+</body>
+</html>

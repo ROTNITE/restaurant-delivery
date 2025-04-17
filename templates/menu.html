@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% block title %}Меню{% endblock %}
+
+{% block content %}
+<main class="categories">
+  {% for cat in categories %}
+    <section id="cat-{{ cat.id }}">
+      <h2>{{ cat.name }}</h2>
+      <div class="dishes">
+        {% for dish in cat.dishes.all %}
+          <div class="dish-card">
+            {% if dish.image %}
+              <img src="{{ dish.image.url }}" alt="{{ dish.title }}">
+            {% endif %}
+            <div class="content">
+              <h3>{{ dish.title }}</h3>
+              <p>{{ dish.description }}</p>
+              <p class="price-line">{{ dish.price }} ₽</p>
+            </div>
+            <button class="add-to-cart"
+                    data-id="{{ dish.id }}"
+                    data-title="{{ dish.title }}"
+                    data-price="{{ dish.price }}">
+              Добавить
+            </button>
+          </div>
+        {% endfor %}
+      </div>
+    </section>
+  {% endfor %}
+</main>
+{% endblock %}
