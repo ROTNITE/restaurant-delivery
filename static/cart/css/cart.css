@@ -238,3 +238,12 @@
   font-weight: bold;
   font-size: 1rem;
 }
+/* Контролы количества на карточке */
+.qty-controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;   /* вот эта строчка центрирует кнопки */
+  gap: 0.5rem;
+  margin-top: auto;      /* авто‑отступы по бокам, чтобы блок занял всю ширину */
+  width: 100%;                /* чтобы justify-content работал на всю карточку */
+}
