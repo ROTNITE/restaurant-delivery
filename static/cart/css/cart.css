@@ -38,8 +38,15 @@
 }
 #cart-modal ul {
   margin-bottom: var(--gap);
+  list-style: none;
+  padding: 0;
 }
-.close-btn {
+#cart-modal ul li {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.25rem 0;
+}
+#cart-modal .close-btn {
   position: absolute;
   top: var(--gap); right: var(--gap);
   background: var(--accent);
@@ -94,15 +101,58 @@
 #product-modal .modal-price {
   font-weight: bold; margin-bottom: 1rem;
 }
+/* Кнопка «Добавить» в модалке — полностью прямоугольная */
 #product-modal .add-to-cart-modal {
-  padding: 0.6rem 1rem; background: var(--btn); color: var(--fg);
-  border: none; border-radius: var(--r); cursor: pointer;
-  transition: background 0.2s; align-self: flex-start;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.8rem 1.2rem;    /* размер кнопки */
+  background: var(--btn);
+  color: var(--fg);
+  border: none;
+  border-radius: var(--r);
+  cursor: pointer;
+  transition: background 0.2s;
+  align-self: flex-start;
+  margin-left: 0.5rem;
+  width: auto;              /* сбрасываем квадратную ширину */
+  height: auto;             /* сбрасываем квадратную высоту */
+  line-height: normal;      /* чтобы текст был по центру */
 }
 #product-modal .add-to-cart-modal:hover {
   background: var(--btn-hover);
 }
 
+/* Контролы внутри модалки товара */
+.modal-controls {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 1rem;
+  margin-left: 0.5rem;
+}
+.modal-controls button {
+  width: 3rem;
+  height: 3rem;
+  line-height: 3rem;
+  text-align: center;
+  border: none;
+  border-radius: var(--r);
+  background-color: var(--accent);
+  color: #fff;
+  font-size: 1.25rem;
+  cursor: pointer;
+  transition: background-color .2s;
+}
+.modal-controls button:hover {
+  background-color: #e65a00;
+}
+.modal-controls span {
+  min-width: 1.5rem;
+  text-align: center;
+  font-weight: bold;
+  font-size: 1rem;
+}
 /* Всплывающее окно оформления заказа */
 .popup,
 .popup--info {
@@ -119,7 +169,6 @@
   from { opacity:0; }
   to   { opacity:1; }
 }
-
 .popup__container {
   background:#fff; border-radius:4px;
   max-width:800px; width:100%;
@@ -133,7 +182,6 @@
 .popup__item:last-of-type {
   border-bottom:none;
 }
-
 .popup__title { font-size:20px; margin-bottom:20px; }
 .popup__product {
   display:flex; align-items:center; justify-content:space-between; margin-bottom:20px;
@@ -145,13 +193,11 @@
 .popup__product-delete {
   font-size:12px; padding:5px; cursor:pointer; color:#d62240;
 }
-
 .popup__cost {
   display:flex; justify-content:flex-end; margin-bottom:5px;
 }
 .popup__cost-title { margin-right:15px; font-size:20px; color:#364364; }
 .popup__cost-value { font-size:20px; }
-
 .popup__close {
   position:absolute; top:10px; right:10px;
   font-size:24px; background:none; border:none; cursor:pointer;
@@ -168,13 +214,12 @@
   border:1px solid #ccc; background:#f9f9f9;
 }
 .popup__input:focus {
-  border-color:#70c05b; outline:none;
+  border-color:var(--btn); outline:none;
 }
 .popup__submit {
-  background:#70c05b; color:#fff; border:1px solid #70c05b;
+  background:var(--btn); color:#fff; border:1px solid var(--btn);
   font-size:16px; cursor:pointer; font-weight:500;
 }
-
 .popup__message {
   font-size:18px; font-weight:500; margin-bottom:20px;
 }
