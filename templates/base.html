@@ -28,7 +28,6 @@
   <script type="module" src="{% static 'menu/js/sidebar.js' %}"></script>
   <script type="module" src="{% static 'product/js/product-modal.js' %}"></script>
   <script type="module" src="{% static 'cart/js/cart.js' %}"></script>
-
 </head>
 <body class="{% if menu_page %}menu-page{% endif %}">
   <header class="site-header">
@@ -89,15 +88,27 @@
   <!-- Модалка корзины -->
   <div id="cart-modal" class="hidden">
     <div class="modal-content">
-      <h2>Ваша корзина</h2>
-      <ul id="cart-items"></ul>
-      <form id="order-form">
-        <input name="client-name" type="text" placeholder="Ваше имя" required>
-        <input name="client-phone" type="tel" placeholder="Телефон" required>
-        <input name="client-address" type="text" placeholder="Адрес доставки" required>
-        <button type="submit" class="pay-btn">Оплатить</button>
-      </form>
       <button class="close-btn" aria-label="Закрыть">&times;</button>
+      <h2>Ваша корзина</h2>
+
+      <ul id="cart-items"></ul>
+
+      <div class="cart-actions">
+        <button id="clear-cart-btn" class="btn-clear">Очистить корзину</button>
+      </div>
+
+      <form id="order-form">
+        <div class="form-group">
+          <input name="client-name" type="text" placeholder="Ваше имя" required>
+        </div>
+        <div class="form-group">
+          <input name="client-phone" type="tel" placeholder="Телефон" required>
+        </div>
+        <div class="form-group">
+          <input name="client-address" type="text" placeholder="Адрес доставки" required>
+        </div>
+        <button type="submit" class="btn-pay">Оплатить</button>
+      </form>
     </div>
   </div>
 

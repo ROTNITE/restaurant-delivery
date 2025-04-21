@@ -89,20 +89,20 @@ window.addEventListener('DOMContentLoaded', () => {
   });
 
   // === DOM refs ===
-  const cartBtn     = document.getElementById('cart-btn');
-  const cartCountEl = document.getElementById('cart-count');
-  const cartModal   = document.getElementById('cart-modal');
-  const itemsUl     = document.getElementById('cart-items');
-  const orderForm   = document.getElementById('order-form');
-  const closeCart   = cartModal.querySelector('.close-btn');
-  const cards       = document.querySelectorAll('.dish-card');
-  const productModal= document.getElementById('product-modal');
-  const modalImg    = productModal.querySelector('.product-image');
-  const modalTitle  = productModal.querySelector('.modal-title');
-  const modalDesc   = productModal.querySelector('.modal-description');
-  const modalPrice  = productModal.querySelector('.modal-price');
-  const addModalBtn = productModal.querySelector('.add-to-cart-modal');
-  const closeProd   = productModal.querySelector('.close-btn-modal');
+  const cartBtn       = document.getElementById('cart-btn');
+  const cartCountEl   = document.getElementById('cart-count');
+  const cartModal     = document.getElementById('cart-modal');
+  const itemsUl       = document.getElementById('cart-items');
+  const orderForm     = document.getElementById('order-form');
+  const closeCart     = cartModal.querySelector('.close-btn');
+  const clearCartBtn  = document.getElementById('clear-cart-btn');
+  const cards         = document.querySelectorAll('.dish-card');
+  const productModal  = document.getElementById('product-modal');
+  const modalImg      = productModal.querySelector('.product-image');
+  const modalTitle    = productModal.querySelector('.modal-title');
+  const modalDesc     = productModal.querySelector('.modal-description');
+  const modalPrice    = productModal.querySelector('.modal-price');
+  const closeProd     = productModal.querySelector('.close-btn-modal');
 
   // === Обновление UI ===
   function updateAll() {
@@ -191,7 +191,20 @@ window.addEventListener('DOMContentLoaded', () => {
   }
   cartBtn.addEventListener('click', () => toggleCart(true));
   closeCart.addEventListener('click', () => toggleCart(false));
-  cartModal.addEventListener('click', e => { if (e.target === cartModal) toggleCart(false); });
+  cartModal.addEventListener('click', e => {
+    if (e.target === cartModal) toggleCart(false);
+  });
+
+  // === Очистка корзины ===
+  if (clearCartBtn) {
+    clearCartBtn.addEventListener('click', e => {
+      e.stopPropagation();
+      if (confirm('Вы действительно хотите очистить корзину?')) {
+        myCart.products = [];
+        updateAll();
+      }
+    });
+  }
 
   // === Модалка товара (специальные контролы рисуются отдельно) ===
   cards.forEach(card => {
@@ -221,16 +234,16 @@ window.addEventListener('DOMContentLoaded', () => {
     e.preventDefault();
     if (myCart.count === 0) return alert('Корзина пуста');
     const data = {
-      full_name:  orderForm['client-name'].value,
-      phone:      orderForm['client-phone'].value,
-      address:    orderForm['client-address'].value,
-      items:      myCart.products.map(p => ({ dish: p.id, quantity: p.qty }))
+      full_name: orderForm['client-name'].value,
+      phone:     orderForm['client-phone'].value,
+      address:   orderForm['client-address'].value,
+      items:     myCart.products.map(p => ({ dish: p.id, quantity: p.qty }))
     };
     fetch('/api/orders/', {
       method:  'POST',
       headers: {
-        'Content-Type': 'application/json',
-        'X-CSRFToken':  document.cookie.match(/csrftoken=([^;]+)/)?.[1]
+        'Content-Type':'application/json',
+        'X-CSRFToken': document.cookie.match(/csrftoken=([^;]+)/)?.[1]
       },
       body: JSON.stringify(data)
     })
