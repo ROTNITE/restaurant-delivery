@@ -1,0 +1,358 @@
+/* main.css (финальная версия) */
+
+/* спрятать гамбургер вне страницы меню */
+.hamburger {
+  display: none;
+}
+body.menu-page .hamburger {
+  display: flex;
+}
+
+/* плавный скролл & фейд-ин */
+html { scroll-behavior: smooth; }
+body { opacity: 0; transition: opacity 0.3s ease; }
+body.loaded { opacity: 1; }
+
+/* запрет прокрутки при открытых модалках */
+body.no-scroll { overflow: hidden; }
+
+/* переменные */
+:root {
+  --bg: #000;
+  --fg: #fff;
+  --accent: #8c3f3f;
+  --btn: #ac524f;
+  --btn-hover: #9b4442;
+  --r: 8px;
+  --gap: 1rem;
+  --small-gap: 0.5rem;
+  --shadow: rgba(0,0,0,0.1);
+}
+
+/* сброс */
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Segoe UI', sans-serif; background: var(--bg); color: var(--fg); line-height: 1.5; }
+
+/* HEADER */
+.site-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--accent);
+  padding: var(--gap);
+  position: sticky;
+  top: 0;
+  z-index: 500;
+  border-bottom: 1px solid var(--fg);
+}
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: var(--small-gap);
+}
+.hamburger {
+  flex-direction: column;
+  justify-content: space-between;
+  width: 24px;
+  height: 24px;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+.hamburger span {
+  height: 3px;
+  background: var(--fg);
+  border-radius: 2px;
+  transition: background 0.3s;
+}
+.site-logo {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.5rem;
+  color: var(--fg);
+  text-decoration: none;
+  margin-left: 10rem; /* подвиньте по необходимости */
+}
+
+/* навигация */
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: var(--small-gap);
+}
+.main-nav {
+  display: flex;
+  gap: var(--small-gap);
+}
+.main-nav a {
+  padding: 0.5rem 2rem;
+  color: var(--fg);
+  text-decoration: none;
+  font-size: 1.2rem;
+  border: 1px solid var(--fg);      /* обводка */
+  border-radius: var(--r);           /* скругление */
+  transition: background 0.2s, transform 0.2s;
+}
+.main-nav a:hover {
+  background: rgba(255,255,255,0.1);
+  transform: scale(1.05);
+}
+
+.cart-btn {
+  background: transparent;
+  color: var(--fg);
+  border: 1px solid var(--fg);      /* обводка */
+  border-radius: var(--r);           /* скругление */
+  padding: 0.8rem 1.2rem;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.2s;
+  font-size: 1.2rem;
+}
+.cart-btn:hover {
+  background: rgba(255,255,255,0.1);
+  transform: scale(1.05);
+}
+
+/* боковая шторка меню */
+.side-menu {
+  position: fixed;
+  top: 0;
+  left: -240px;
+  width: 240px;
+  height: 100%;
+  background: var(--bg);
+  color: var(--fg);
+  overflow-x: hidden;
+  transition: left 0.3s ease;
+  padding: var(--gap) var(--gap) 0;
+  font-family: 'Georgia', serif;
+  z-index: 600;
+}
+.side-menu.open { left: 0; }
+.side-menu-header {
+  text-align: center;
+  font-size: 1.4rem;
+  margin-bottom: var(--gap);
+  font-weight: bold;
+}
+.side-menu ul { list-style: none; }
+.side-menu li + li { margin-top: 0.75rem; }
+.side-menu a {
+  display: block;
+  padding: 0.4rem 0;
+  font-size: 1.2rem;
+  color: var(--fg);
+  text-decoration: none;
+}
+.side-menu a:hover { color: var(--accent); }
+
+/* GRID категорий */
+.categories { padding: var(--gap); }
+.dishes {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: var(--gap);
+}
+
+/* карточка блюда */
+.dish-card {
+  position: relative;
+  width: 240px;
+  height: 450px;
+  background: var(--bg);
+  color: var(--fg);
+  border-radius: var(--r);
+  box-shadow: 0 2px 8px var(--shadow);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  transition: transform 0.2s, border 0.2s;
+  cursor: pointer;
+}
+.dish-card:hover {
+  transform: translateY(-4px);
+  border: 2px solid orange;
+}
+.dish-card img {
+  width: 100%;
+  height: 240px;
+  object-fit: cover;
+}
+.dish-card .content { padding: var(--gap); flex: 1; }
+.price-line { font-weight: bold; color: var(--accent); }
+
+/* кнопка «Добавить» на карточке */
+.add-to-cart {
+  margin: var(--gap) auto;
+  padding: 0.6rem 1rem;
+  background: var(--btn);
+  color: var(--fg);
+  border: none;
+  border-radius: var(--r);
+  cursor: pointer;
+  transition: background 0.2s, transform 0.2s;
+  width: calc(100% - var(--gap)*2);
+  text-align: center;
+}
+.add-to-cart:hover {
+  background: var(--btn-hover);
+  transform: translateY(-2px);
+}
+
+/* контролы количества */
+.qty-controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--small-gap);
+  margin: var(--gap) auto;
+}
+.qty-controls button {
+  width: 32px;
+  height: 32px;
+  background: var(--accent);
+  color: var(--fg);
+  border: none;
+  border-radius: 4px;
+  font-size: 1.2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.2s;
+}
+.qty-controls button:hover {
+  background: var(--btn-hover);
+  transform: scale(1.1);
+}
+.qty-controls span {
+  min-width: 24px;
+  text-align: center;
+  font-size: 1.1rem;
+  font-weight: bold;
+}
+
+/* модалка корзины */
+#cart-modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 600;
+}
+#cart-modal.hidden { display: none; }
+#cart-modal .modal-content {
+  background: var(--bg);
+  color: var(--fg);
+  padding: var(--gap);
+  border-radius: var(--r);
+  max-width: 480px;
+  width: 90%;
+  position: relative;
+}
+#cart-modal h2 { margin-bottom: 0.5rem; }
+#cart-modal ul { margin-bottom: var(--gap); }
+.close-btn {
+  position: absolute;
+  top: var(--gap);
+  right: var(--gap);
+  background: var(--accent);
+  color: var(--fg);
+  border: none;
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  font-size: 1.2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+/* модалка товара */
+#product-modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.5);
+  backdrop-filter: blur(6px);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 700;
+}
+#product-modal.active { display: flex; }
+#product-modal .modal-inner {
+  background: #ccc;
+  padding: var(--gap);
+  border-radius: var(--r);
+  max-width: 800px;
+  width: 90%;
+  position: relative;
+  display: flex;
+  gap: var(--gap);
+}
+#product-modal .close-btn-modal {
+  position: absolute;
+  top: var(--gap);
+  right: var(--gap);
+  background: var(--accent);
+  color: var(--fg);
+  border: none;
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  font-size: 1.2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+#product-modal .product-image {
+  flex: 1;
+  max-width: 50%;
+  border-radius: var(--r);
+  object-fit: cover;
+}
+#product-modal .product-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+#product-modal .modal-title {
+  font-size: 1.5rem;
+  margin-bottom: 0.5rem;
+}
+#product-modal .modal-description {
+  flex-grow: 1;
+  margin-bottom: 1rem;
+  overflow-y: auto;
+}
+#product-modal .modal-price {
+  font-weight: bold;
+  margin-bottom: 1rem;
+}
+#product-modal .add-to-cart-modal {
+  padding: 0.6rem 1rem;
+  background: var(--btn);
+  color: var(--fg);
+  border: none;
+  border-radius: var(--r);
+  cursor: pointer;
+  transition: background 0.2s;
+  align-self: flex-start;
+}
+#product-modal .add-to-cart-modal:hover {
+  background: var(--btn-hover);
+}
+
+/* FOOTER */
+.site-footer {
+  text-align: center;
+  padding: var(--gap);
+  background: transparent;
+  border-top: 1px solid var(--accent);
+  color: var(--accent);
+  font-weight: bold;
+}

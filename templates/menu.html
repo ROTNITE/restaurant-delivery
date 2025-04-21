@@ -2,20 +2,25 @@
 {% block title %}Меню{% endblock %}
 
 {% block content %}
-<main class="categories">
+<div class="categories">
   {% for cat in categories %}
     <section id="cat-{{ cat.id }}">
       <h2>{{ cat.name }}</h2>
       <div class="dishes">
         {% for dish in cat.dishes.all %}
-          <div class="dish-card">
+          <div class="dish-card"
+               data-id="{{ dish.id }}"
+               data-title="{{ dish.title }}"
+               data-description="{{ dish.description }}"
+               data-price="{{ dish.price }}"
+               {% if dish.image %}data-img-url="{{ dish.image.url }}"{% endif %}>
             {% if dish.image %}
               <img src="{{ dish.image.url }}" alt="{{ dish.title }}">
             {% endif %}
             <div class="content">
               <h3>{{ dish.title }}</h3>
               <p>{{ dish.description }}</p>
-              <p class="price-line">{{ dish.price }} ₽</p>
+              <p class="price-line">{{ dish.price }} ₽</p>
             </div>
             <button class="add-to-cart"
                     data-id="{{ dish.id }}"
@@ -28,5 +33,5 @@
       </div>
     </section>
   {% endfor %}
-</main>
+</div>
 {% endblock %}

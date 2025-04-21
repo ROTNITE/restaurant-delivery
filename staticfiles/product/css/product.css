@@ -1,0 +1,130 @@
+/* Основные стили карточек товаров (альтернативная верстка .card) */
+
+.product {
+    padding: 50px 0;
+  }
+  .product__info {
+    margin-bottom: 40px;
+  }
+  .product__title {
+    display: inline-block;
+    font-size: 2rem;
+    margin-right: 7px;
+  }
+  .product__title--gray {
+    color: #b3b3b7;
+  }
+  
+  /* Грид для карточек .card */
+  .cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, 225px);
+    max-width: 1000px;
+    gap: 40px 30px;
+    margin: 0 auto;
+    justify-content: center;
+    justify-items: center;
+  }
+  
+  /* Стили отдельной карточки товара */
+  .card {
+    width: 225px;
+    min-height: 350px;
+    box-shadow: 1px 2px 4px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    border-radius: 4px;
+    transition: 0.2s;
+    position: relative;
+  }
+  .card:hover {
+    box-shadow: 4px 8px 16px rgba(255, 102, 51, 0.2);
+  }
+  
+  /* Метка на карточке */
+  .card__label {
+    position: absolute;
+    bottom: 10px; left: 10px;
+    padding: 4px 8px;
+    background: #ff6633;
+    border-radius: 4px;
+    font-size: 16px;
+    color: #fff;
+    font-weight: 400;
+  }
+  
+  /* Верхняя часть */
+  .card__top {
+    flex: 0 0 220px;
+    position: relative;
+    overflow: hidden;
+  }
+  .card__image {
+    position: absolute;
+    top:0; left:0;
+    width:100%; height:100%;
+  }
+  .card__image img {
+    width:100%; height:100%;
+    object-fit: contain;
+    transition:0.2s;
+  }
+  .card__image:hover img {
+    transform: scale(1.1);
+  }
+  
+  /* Нижняя часть */
+  .card__bottom {
+    display:flex; flex-direction:column;
+    flex:1 0 auto; padding:10px;
+  }
+  
+  /* Цены */
+  .card__prices {
+    display:flex; margin-bottom:10px;
+  }
+  .card__price {
+    flex:0 0 50%; position:relative;
+  }
+  .card__price::after {
+    content:"₽"; margin-left:4px;
+  }
+  .card__price--common::before {
+    content:"Обычная"; font-size:13px; color:#bfbfbf; font-weight:400;
+  }
+  .card__price--common {
+    font-size:17px; color:#606060;
+    display:flex; flex-wrap:wrap-reverse; justify-content:flex-end;
+  }
+  .card__price--discount::before {
+    content:"Со скидкой"; font-size:13px; color:#bfbfbf; font-weight:400;
+  }
+  .card__price--discount {
+    font-weight:700; font-size:19px; color:#414141;
+    display:flex; flex-wrap:wrap-reverse;
+  }
+  
+  /* Заголовок */
+  .card__title {
+    display:block; margin-bottom:10px;
+    font-size:17px; line-height:150%;
+    color:#414141; font-weight:400;
+  }
+  .card__title:hover {
+    color:#ff6633;
+  }
+  
+  /* Кнопка добавить */
+  .card__add {
+    width:100%; padding:10px; font-size:17px;
+    color:#70c05b; text-align:center;
+    border:1px solid #70c05b; border-radius:4px;
+    cursor:pointer; transition:0.2s;
+    margin-top:auto;
+  }
+  .card__add:hover {
+    border-color:#ff6633;
+    background-color:#ff6633;
+    color:#fff;
+  }
+  

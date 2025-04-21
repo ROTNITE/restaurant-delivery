@@ -1,0 +1,12 @@
+:root {
+    --bg: #000;
+    --fg: #fff;
+    --accent: #8c3f3f;
+    --btn: #ac524f;
+    --btn-hover: #9b4442;
+    --r: 8px;
+    --gap: 1rem;
+    --small-gap: 0.5rem;
+    --shadow: rgba(0,0,0,0.1);
+  }
+  
