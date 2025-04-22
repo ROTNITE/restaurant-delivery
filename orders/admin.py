@@ -1,5 +1,9 @@
 from django.contrib import admin
-from .models import Order, NotificationSettings
+from .models import Order, NotificationSettings, SMTPSettings
+
+@admin.register(SMTPSettings)
+class SMTPSettingsAdmin(admin.ModelAdmin):
+    list_display = ("username", "host", "port", "use_tls")
 
 @admin.register(NotificationSettings)
 class NotificationSettingsAdmin(admin.ModelAdmin):
