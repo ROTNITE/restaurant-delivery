@@ -240,18 +240,21 @@ window.addEventListener('DOMContentLoaded', () => {
       items:     myCart.products.map(p => ({ dish: p.id, quantity: p.qty }))
     };
     fetch('/api/orders/', {
-      method:  'POST',
+      method: 'POST',
+      credentials: 'same-origin',
       headers: {
         'Content-Type':'application/json',
         'X-CSRFToken': document.cookie.match(/csrftoken=([^;]+)/)?.[1]
       },
       body: JSON.stringify(data)
     })
-    .then(r => r.ok
-      ? window.location.href = '/order-success/'
-      : alert('Ошибка при отправке')
-    )
-    .catch(() => alert('Ошибка сети'));
+    .then(r => {
+      if (!r.ok) {
+        return r.text().then(txt => { throw new Error(txt); });
+      }
+      window.location.href = '/order-success/';
+    })
+    .catch(err => alert('Ошибка при отправке: ' + err.message));
   });
 
   // === Init ===
@@ -261,3 +264,4 @@ window.addEventListener('DOMContentLoaded', () => {
   window.myCart    = myCart;
   window.updateAll = updateAll;
 });
+

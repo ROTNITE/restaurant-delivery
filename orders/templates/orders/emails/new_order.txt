@@ -1,0 +1,10 @@
+Новый заказ #{{ order.id }}
+Клиент: {{ order.full_name }}
+Телефон: {{ order.phone }}
+Адрес: {{ order.address }}
+Дата: {{ order.created_at|date:"d.m.Y H:i" }}
+
+Позиции:
+{% for item in order.items %}
+- {{ item.dish }}: {{ item.quantity }}
+{% endfor %}

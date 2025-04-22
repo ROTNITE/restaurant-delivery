@@ -2,7 +2,10 @@ import os
 import requests
 from django.db import models
 from django.core.mail import send_mail
+import logging
 from django.template.loader import render_to_string
+
+logger = logging.getLogger(__name__)
 
 class Order(models.Model):
     STATUS_NEW = 'new'
@@ -29,26 +32,46 @@ class Order(models.Model):
         return f"Заказ #{self.id} — {self.full_name}"
 
     def notify_admin(self):
-        # Отправка email
         subject = f"Новый заказ #{self.id}"
-        message = render_to_string(
-            "orders/emails/new_order.txt", {"order": self}
-        )
-        from_email = os.getenv('SMTP_USER')
-        recipient_list = [os.getenv('ADMIN_EMAIL')]
-        send_mail(subject, message, from_email, recipient_list)
-
-        # Отправка в Telegram
-        token = os.getenv('TELEGRAM_BOT_TOKEN')
-        chat_id = os.getenv('TELEGRAM_CHAT_ID')
-        text = (
+        # Собираем текст вручную или через шаблон
+        text_message = (
             f"{subject}\n"
             f"Клиент: {self.full_name}\n"
             f"Телефон: {self.phone}\n"
-            f"Адрес: {self.address}\n"
-            f"Позиции: {self.items}"
+            f"Адрес: {self.address}\n\n"
+            "Позиции:\n" +
+            "\n".join(f"- {i['dish']}: {i['quantity']}" for i in self.items)
         )
-        requests.get(
-            f"https://api.telegram.org/bot{token}/sendMessage",
-            params={"chat_id": chat_id, "text": text},
-        )
+
+        try:
+            send_mail(
+                subject,
+                text_message,
+                None,  # возьмёт DEFAULT_FROM_EMAIL
+                [cfg.email_address],
+                fail_silently=False,
+            )
+        except Exception as e:
+            logger.error("Не удалось отправить email-уведомление: %s", e)
+
+        try:
+            requests.post(
+                f"https://api.telegram.org/bot{cfg.telegram_token}/sendMessage",
+                data={'chat_id': cfg.telegram_chat_id, 'text': text_message},
+                timeout=5
+            )
+        except Exception as e:
+            logger.error("Не удалось отправить Telegram-уведомление: %s", e)
+
+# orders/models.py
+class NotificationSettings(models.Model):
+    email_address   = models.EmailField("Email для уведомлений")
+    telegram_token  = models.CharField("Telegram Bot Token", max_length=200)
+    telegram_chat_id = models.CharField("Telegram Chat ID", max_length=100)
+
+    class Meta:
+        verbose_name = "Настройки уведомлений"
+        verbose_name_plural = "Настройки уведомлений"
+
+    def __str__(self):
+        return "Настройки уведомлений"
