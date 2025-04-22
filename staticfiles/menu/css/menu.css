@@ -44,7 +44,6 @@ body.menu-page .hamburger {
   font-size: 1.5rem;
   color: var(--fg);
   text-decoration: none;
-  /* margin-left можно регулировать локально */
 }
 
 /* навигация */
@@ -75,6 +74,19 @@ body.menu-page .hamburger {
 .categories {
   padding: var(--gap);
 }
+.categories section {
+  margin-bottom: calc(var(--gap) * 2);
+}
+.categories section h2 {
+  font-family: 'Golos Text', sans-serif;
+  font-size: 2.4rem;
+  font-weight: 600;
+  margin: var(--gap) 0 var(--small-gap);
+  border-bottom: 2px solid var(--accent);
+  padding-bottom: 0.25rem;
+  color: var(--fg);
+}
+
 .dishes {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
@@ -166,8 +178,10 @@ body.menu-page .hamburger {
 /* боковая шторка меню */
 .side-menu {
   position: fixed;
-  top: 0; left: -240px;
-  width: 240px; height: 100%;
+  top: 0;
+  left: -240px;
+  width: 240px;
+  height: 100%;
   background: var(--bg);
   color: var(--fg);
   overflow-x: hidden;

@@ -3,6 +3,13 @@ from .models import Dish
 from .serializers import DishSerializer
 from django.views.generic import ListView
 from .models import Category
+from django.shortcuts import render
+from .models import Promotion
+
+def promo_list(request):
+    banners = Promotion.objects.filter(is_active=True)
+    print("DEBUG promo_list:", list(banners))
+    return render(request, 'promo.html', {'banners': banners})
 
 # API‑эндпоинт для DRF
 class DishViewSet(viewsets.ReadOnlyModelViewSet):

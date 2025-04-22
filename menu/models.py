@@ -1,6 +1,33 @@
 from django.db import models
 from django.db.models import Max
 
+class Promotion(models.Model):
+    title = models.CharField("Название акции", max_length=200, blank=True)
+    banner = models.ImageField(
+        "Баннер акции",
+        upload_to="promotions/",
+        blank=True,
+        null=True
+    )
+    is_active = models.BooleanField(
+        "Активна",
+        default=True,
+        help_text="Скрыть неактивные баннеры"
+    )
+    order = models.PositiveIntegerField(
+        "Порядок вывода",
+        default=0,
+        help_text="Чем меньше — тем раньше показывается"
+    )
+
+    class Meta:
+        verbose_name = "Акция"
+        verbose_name_plural = "Акции"
+        ordering = ['order']
+
+    def __str__(self):
+        return self.title or f"Акция #{self.pk}"
+
 class Category(models.Model):
     name  = models.CharField("Категория", max_length=100)
     order = models.PositiveIntegerField("Порядок", default=0)
