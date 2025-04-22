@@ -1,0 +1,60 @@
+*{
+    font-family: Argentum Sans VF;
+}
+
+body{
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    background-color: #F1EFE9;
+}
+
+.menu {
+    background-color: rgba(0, 0, 0, 0.1);
+    padding: 10px 0;
+    margin: 2.68% 20% 5% 20%;
+
+    border-radius: 14px;
+}
+
+.menu-wrap {
+    display: flex;
+    justify-content: space-between;
+    padding: 0 15px;
+    align-items: center;
+}
+
+.logo-wrap{
+    background-color: white;
+    border-radius: 12px;
+    display: grid;
+    height: 64px;
+    width: 20%;
+}
+
+.logo-wrap span{
+    margin: auto;
+    text-align: center;
+
+    font-weight: bold;
+    font-size: large;
+}
+
+.menu nav{
+    width: 100%;
+}
+
+.menu ul{
+    display:inline;
+    padding-left: 4%;
+}
+
+.menu ul li{
+    display: inline;
+    padding: 0 4% 0 0;
+}
+
+.menu ul li a{
+    text-decoration: none;
+    color: black;
+}

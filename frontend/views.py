@@ -4,7 +4,7 @@ from django.db.models import Prefetch
 from menu.models import Category, Dish
 
 def home(request):
-    return render(request, 'home.html')
+    return render(request, 'index.html')
 
 def menu(request):
     # Загружаем категории в порядке поля `order`
@@ -27,11 +27,8 @@ def promo(request):
 def delivery(request):
     return render(request, 'delivery.html')
 
+def aboutus(request):
+    return render(request, 'aboutus.html')
+
 def contacts(request):
     return render(request, 'contacts.html')
-
-def terms(request):
-    return render(request, 'agreement.html')
-
-def order_success(request):
-    return render(request, 'order_success.html')
